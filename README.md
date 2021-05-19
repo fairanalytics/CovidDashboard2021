@@ -25,5 +25,7 @@ https://fair-analytics.shinyapps.io/covidfairanalytics/
 
 ## Usage and Installation : 
 
-install.packages("remotes") 
-remotes::install_github("fairanalytics/CovidDashboard2021")
+- install.packages("remotes") 
+
+
+- remotes::install_github("fairanalytics/CovidDashboard2021")
