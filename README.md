@@ -23,7 +23,15 @@ The dashboard diplays a bunch of infromation on a country level with a possibili
 
 https://fair-analytics.shinyapps.io/covidfairanalytics/
 
-## Usage and Installation : 
+## what makes it happen : 
+
+Several packages were involved to make this project a real dashboard, below are the elements : 
+* shiny/shindashboard/shindashboardPlus : without them the UI would look like a R file .
+* Tidyverse Family and purrr : my favourite packages to make every complex dataset look like "mtcars" . 
+* golem : as sexy as that you would not find, it enables to organize the dashboard as a software and package and gives it an entreprise framework.
+
+## Usage and Installation
+In order to run the app in your local machine, follow the steps below : 
 
 - install.packages("remotes") 
 We need Dev version of shinydashboardPlus
@@ -35,4 +43,11 @@ Then simply install the Covid Dashboard as a package .
 
 Successfully installed ? run the following command line in your IDE : 
 
-CovidFairAnalytics::run_app()
+* **CovidFairAnalytics::run_app()**
+
+## Issues :
+
+If you encounter any issue for installation or running the dashboard itself , please report them here: 
+
+https://github.com/fairanalytics/CovidDashboard2021/issues
+
