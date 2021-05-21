@@ -26,6 +26,13 @@ https://fair-analytics.shinyapps.io/covidfairanalytics/
 ## Usage and Installation : 
 
 - install.packages("remotes") 
+We need Dev version of shinydashboardPlus
+- remotes::install_github("RinteRface/shinydashboardPlus")
 
+Then simply install the Covid Dashboard as a package .
 
 - remotes::install_github("fairanalytics/CovidDashboard2021")
+
+Successfully installed ? run the following command line in your IDE : 
+
+CovidFairAnalytics::run_app()
