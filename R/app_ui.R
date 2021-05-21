@@ -80,26 +80,26 @@ app_ui <- function(request) {
                                               height = "150px"),
                                   uiOutput("download_covac_data_ui"),
                                   shinydashboardPlus::box(title = "Daily Cases",width = 12,
-                                                          # fluidRow(
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info_daily1")),
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info_daily2")),
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info_daily3"))
-                                                          # ),
+                                                          fluidRow(
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info_daily1")),
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info_daily2")),
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info_daily3"))
+                                                          ),
                                                           plotly::plotlyOutput("vaccine_daily_charts")
                                                           
                                   ),
                                   shinydashboardPlus::box(title = "Total Cases",width = 12,
-                                                          # fluidRow(
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info1")),
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info2")),
-                                                          #   column(width = 4,
-                                                          #          uiOutput("covid_info3"))
-                                                          # ),
+                                                          fluidRow(
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info1")),
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info2")),
+                                                            column(width = 4,
+                                                                   uiOutput("covac_info3"))
+                                                          ),
                                                           
                                                           plotly::plotlyOutput("vaccine_total_charts")
                                   )# Box: totol

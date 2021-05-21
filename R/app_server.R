@@ -156,8 +156,52 @@ app_server <- function( input, output, session ) {
   # COVID Vaccine panel
   
   covid_vaccin_tisefka <- reactive({
-    vaccine_data <- vaccine_import_data()
+    req(input$covid_tamurt)
+    vaccine_data <- vaccine_import_data()%>%dplyr::filter(country == !!input$covid_tamurt)
     return(vaccine_data)
+  })
+  
+  output$covac_info_daily1 <- renderUI({
+    req(covid_vaccin_tisefka())
+    aa <<-covid_vaccin_tisefka()
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "total_vaccinations")%>%tail(1)%>%dplyr::pull(!!input$covid_frequency)
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    shinydashboard::valueBox(subtitle = "total_vaccinations", width = 12, value = info_values,color ="navy" ,icon = icon("fas fa-virus") )
+  })
+  
+  output$covac_info_daily2 <- renderUI({
+    req(covid_vaccin_tisefka())
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "people_vaccinated")%>%tail(1)%>%dplyr::pull(!!input$covid_frequency)
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    
+    shinydashboard::valueBox(subtitle = "People Vaccinated", width = 12,value = info_values,color ="light-blue" ,icon = icon("fas fa-syringe"))
+  })
+  output$covac_info_daily3 <- renderUI({
+    req(covid_vaccin_tisefka())
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "people_fully_vaccinated")%>%tail(1)%>%dplyr::pull(!!input$covid_frequency)
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    shinydashboard::valueBox(subtitle = "People Fully Vaccinated", width = 12, value = info_values,color ="green" , icon =icon("fas fa-heartbeat") )
+  })
+  output$covac_info1 <- renderUI({
+    req(covid_vaccin_tisefka())
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "total_vaccinations")%>%tail(1)%>%dplyr::pull(total)
+    
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    shinydashboard::valueBox(subtitle = "Total Vaccinations", width = 12, value = info_values,color ="navy" ,icon = icon("fas fa-virus") )
+  })
+  
+  output$covac_info2 <- renderUI({
+    req(covid_vaccin_tisefka())
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "people_vaccinated")%>%tail(1)%>%dplyr::pull(total)
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    shinydashboard::valueBox(subtitle = "People Vaccinated", width = 12,value = info_values,color ="light-blue" ,icon = icon("fas fa-syringe"))
+  })
+  output$covac_info3 <- renderUI({
+    req(covid_vaccin_tisefka())
+    info_values <- covid_vaccin_tisefka()%>%dplyr::filter(statistic == "people_fully_vaccinated")%>%tail(1)%>%dplyr::pull(total)
+    info_values <- formatC(as.numeric(info_values), format="f", digits=0, big.mark=",")
+    
+    shinydashboard::valueBox(subtitle = "People Fully Vaccinated", width = 12, value = info_values,color ="green" , icon =icon("fas fa-heartbeat") )
   })
   
   

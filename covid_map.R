@@ -10,6 +10,8 @@ pal <- colorNumeric(
   palette = "Greens",
   domain = covid_data$cases)
 
+ 
+
 
 covid_data %>% leaflet() %>%
   addTiles() %>%

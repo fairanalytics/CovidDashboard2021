@@ -67,7 +67,7 @@ generate_covid_plot <- function(covid_data,tamurt = NULL,acu = NULL, covid_stat 
 generate_vaccine_plot <- function(vaccine_data,tamurt = NULL,acu = NULL, covid_stat = NULL,tazwara= NULL,tagara = NULL){
   vaccine_plot <- vaccine_data%>%dplyr::filter(country ==!!tamurt & statistic %in% acu)%>%
   plotly::plot_ly()%>%
-    plotly::add_lines(x = ~date,y = ~base::get(covid_stat) ,color = ~statistic, colors = c(I("black"), I("navy"),I("darkgreen")))%>%
+    plotly::add_lines(x = ~date,y = ~base::get(covid_stat) ,color = ~statistic, colors = c(I("lightgreen"), I("lightblue"),I("navy")))%>%
     plotly::layout(legend = list(orientation = "h",x = 0.5, y = 1.1), yaxis = list(title = "Covid Vaccine"),title = list(text  = paste0(tamurt) ))
   return(vaccine_plot)
 }
