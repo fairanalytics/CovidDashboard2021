@@ -13,7 +13,8 @@ And one day I thought, I am a data scientist and can have access live public dat
 
 
 ## Data source : 
-The application relies fully on xxxx data, available in the following link : 
+The application relies fully on **Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE)** data, available in the following link : 
+https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases
 
 ## Dashboard : 
 
