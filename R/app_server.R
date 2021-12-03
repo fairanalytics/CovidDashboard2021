@@ -43,20 +43,27 @@ app_server <- function( input, output, session ) {
     selectInput(inputId = "covid_tamurt",label = "Country",choices = timura,selected = "Germany")
   })
   
-  output$tamurt_province <- renderUI({
+  
+  
+  tamurt_provinces <- reactive({
     req(covid_tisefka())
     req(input$covid_tamurt)
-
     tamurt_provinces <- covid_tisefka()%>%
-      
       dplyr::filter(country == !!input$covid_tamurt)%>%
       dplyr::pull(province )%>%na.omit()%>%unique()
+    if(length(tamurt_provinces)==0)return(input$covid_tamurt)
     
-    if(length(tamurt_provinces)>0){
-      tamurt_provinces <- c(input$covid_tamurt,tamurt_provinces)
-      selectInput(inputId = "tamurt_province",label = "Province",choices = tamurt_provinces)  
+    tamurt_provinces <- c(input$covid_tamurt,tamurt_provinces)
+    
+  })
+  
+  output$tamurt_province <- renderUI({
+    req(tamurt_provinces())
+    if(length(tamurt_provinces())>1){
+      selectInput(inputId = "tamurt_province",label = "Province",choices = tamurt_provinces())  
     }
- })
+  })
+  
   output$covid_frequency <- renderUI({
     req(covid_tisefka())
     covid_freqs <- c("daily","weekly","monthly")
@@ -86,11 +93,16 @@ app_server <- function( input, output, session ) {
          height = "70%",
          alt = "Flag not found")
   }, deleteFile = TRUE)
+  
+   
   covid_tisefka_aggregated <- reactive({
     req(covid_tisefka())
     req(input$covid_tamurt)
     req(input$covid_frequency)
-    if(!is.null(input$tamurt_province)){
+    req(tamurt_provinces())
+    
+    if(length(tamurt_provinces())>1){
+      req(input$tamurt_province)
       if(input$covid_tamurt != input$tamurt_province ){
         covid_data <- covid_tisefka()%>%
           dplyr::filter(province ==!!input$tamurt_province)  

@@ -5,7 +5,7 @@ account: fair-analytics
 server: shinyapps.io
 hostUrl: https://api.shinyapps.io/v1
 appId: 4079300
-bundleId: 4617802
+bundleId: 5323978
 url: https://fair-analytics.shinyapps.io/covidfairanalytics/
-when: 1621459574.19195
-lastSyncTime: 1621459574.19195
+when: 1638547738.50247
+lastSyncTime: 1638547738.50247
