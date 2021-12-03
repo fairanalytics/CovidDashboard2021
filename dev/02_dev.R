@@ -22,6 +22,7 @@ usethis::use_package( "shiny.info" )
 usethis::use_package( "shinydashboard" )
 usethis::use_package( "shiny" )
 usethis::use_package( "shinydashboardPlus" )
+usethis::use_package( "shiny.i18n" )
 
 usethis::use_package( "purrr" )
 usethis::use_package( "readr" )
