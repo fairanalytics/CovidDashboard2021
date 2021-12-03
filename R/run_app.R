@@ -23,6 +23,9 @@ run_app <- function(
       enableBookmarking = enableBookmarking, 
       uiPattern = uiPattern
     ), 
-    golem_opts = list(...)
+    # Initiate the translator as a golem.option
+    golem_opts = list()
+    #translator = shiny.i18n::Translator$new(translation_csvs_path = "inst/app/www/translations/")
+    
   )
 }

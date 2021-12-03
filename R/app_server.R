@@ -6,11 +6,24 @@
 #' @noRd
 app_server <- function( input, output, session ) {
   library("dplyr")
+  # calling the translator sent as a golem option
+  #i18n <- golem::get_golem_options(which = "translator")
+  #i18n$set_translation_language("en")
+  
   output$data_source <- output$data_source2 <- renderUI({
     url <- a("Johns Hopkins University Center for Systems Science and Engineering (JHU CCSE)", href="https://data.humdata.org/dataset/novel-coronavirus-2019-ncov-cases")
     tagList("Data Source:", url)
   })
   
+  output$tutlayt <- renderUI({
+    # select language
+    radioButtons(
+      inputId = "tutlayt",
+      label = "Select language",
+      inline = TRUE,
+      choices = i18n$get_languages()
+    )
+  })
   # Your application server logic 
   covid_tisefka <- reactive({
     covid_tisefka_file <- paste0("covid_tisefka_assa_",format(Sys.Date(),"%Y_%m_%d"),".csv")
@@ -20,7 +33,6 @@ app_server <- function( input, output, session ) {
       covid_data <- covid_import_data()%>%purrr::imap(~covid_data_prep(.x,.y))%>%dplyr::bind_rows()
       readr::write_csv(covid_data,covid_tisefka_file)
     }
-    
     return(covid_data)
   })
   
@@ -30,6 +42,21 @@ app_server <- function( input, output, session ) {
     timura <- unique(covid_tisefka()$country)%>%paste0()
     selectInput(inputId = "covid_tamurt",label = "Country",choices = timura,selected = "Germany")
   })
+  
+  output$tamurt_province <- renderUI({
+    req(covid_tisefka())
+    req(input$covid_tamurt)
+
+    tamurt_provinces <- covid_tisefka()%>%
+      
+      dplyr::filter(country == !!input$covid_tamurt)%>%
+      dplyr::pull(province )%>%na.omit()%>%unique()
+    
+    if(length(tamurt_provinces)>0){
+      tamurt_provinces <- c(input$covid_tamurt,tamurt_provinces)
+      selectInput(inputId = "tamurt_province",label = "Province",choices = tamurt_provinces)  
+    }
+ })
   output$covid_frequency <- renderUI({
     req(covid_tisefka())
     covid_freqs <- c("daily","weekly","monthly")
@@ -63,7 +90,19 @@ app_server <- function( input, output, session ) {
     req(covid_tisefka())
     req(input$covid_tamurt)
     req(input$covid_frequency)
-    covid_data <- covid_tisefka()%>%dplyr::filter(country == !!input$covid_tamurt)%>%
+    if(!is.null(input$tamurt_province)){
+      if(input$covid_tamurt != input$tamurt_province ){
+        covid_data <- covid_tisefka()%>%
+          dplyr::filter(province ==!!input$tamurt_province)  
+      }else{
+        covid_data <- covid_tisefka()%>%
+          dplyr::filter(is.na(province))
+      }
+      
+    }else{
+      covid_data <- covid_tisefka()
+    }
+    covid_data <- covid_data%>%dplyr::filter(country == !!input$covid_tamurt)%>%
       timetk::tk_augment_timeseries_signature()%>%dplyr::select(province,country,Lat,Long,date,cases,statistic,daily,year,month.lbl,week.iso)
     if(input$covid_frequency == "monthly"){
       covid_data <- covid_data%>%dplyr::group_by(country,Lat,Long,statistic,year,month.lbl)%>%

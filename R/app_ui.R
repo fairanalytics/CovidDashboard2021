@@ -17,6 +17,7 @@ app_ui <- function(request) {
           shinydashboard::menuItem("COVID Statistics", tabName = "Attan_n_Corona", icon = icon("fas fa-virus")),
           shinydashboard::menuItem("COVID Vaccine", tabName = "vaccin_n_corona", icon = icon("fas fa-virus-slash")),
           uiOutput("covid_tamurt"),
+          uiOutput("tamurt_province"),
           uiOutput("covid_frequency")
           )
         
@@ -70,10 +71,10 @@ app_ui <- function(request) {
           shinydashboard::tabItem(tabName = "vaccin_n_corona",
                                   uiOutput("data_source2"),
                                   fluidRow(
-                                   
                                     column(width = 4,uiOutput("covid_tamurt_text2")),
-                                    column(width = 4,uiOutput("keep_it_empty2")),
-                                    column(width = 4,uiOutput("covid_last_update2"))
+                                    column(width = 3,uiOutput("keep_it_empty2")),
+                                    column(width = 3,uiOutput("covid_last_update2")),
+                                    column(width = 2,uiOutput("tutlayt"))
                                     
                                   ),
                                   imageOutput(outputId = "tamurt_flag2",width = "50%",

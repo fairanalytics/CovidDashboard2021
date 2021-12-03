@@ -49,7 +49,8 @@ covid_data_prep <- function(covid_data = NULL,target_metric = NULL){
   )%>%dplyr::mutate(date = as.Date(date,format ="%m/%d/%y"),statistic = target_metric)
   
   colnames(covid_data)[1:2] <- c('province','country')
-  covid_data%>%dplyr::group_by(province,country)%>%dplyr::mutate(daily = cases - lag(cases))
+  covid_data%>%dplyr::group_by(province,country)%>%dplyr::mutate(daily = cases - lag(cases))%>%
+    dplyr::mutate(daily = dplyr::case_when(daily < 0 ~ 0, TRUE   ~ daily))
   #return(target_metric)
 }
 
